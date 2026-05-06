@@ -1,3 +1,5 @@
 
 # TryHackMe Writeups
-Room documentation for SOC Level 1 path.
+
+
+- [x] Junior Security Analyst Intro ✅ 06 May 2026
