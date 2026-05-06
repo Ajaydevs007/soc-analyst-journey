@@ -1,7 +1,8 @@
 # SOC Analyst Journey 🛡️
-
 Documenting my transition from MERN Stack development 
 into Cybersecurity and SOC Operations.
+
+---
 
 ## About Me
 - BCA Graduate
@@ -10,31 +11,32 @@ into Cybersecurity and SOC Operations.
 - CompTIA Security+ (In Progress — Target Sept 2026)
 - Target Role: SOC Analyst L1
 
-## Progress Tracker
+---
 
-### TryHackMe — SOC Level 1 Path
-- [ ] Junior Security Analyst Intro
-- [ ] SOC Role in Blue Team
-- [ ] Windows Threat Detection 1
-- [ ] Windows Threat Detection 2
-- [ ] Splunk: The Basics
-- [ ] Phishing Analysis Fundamentals
+## Completed Labs & Challenges
 
-### LetsDefend — SOC Alerts
-- [ ] SOC165 — SQL Injection Detection
-- [ ] SOC176 — RDP Brute Force
+### Blue Team Labs Online
+- [x] Log Analysis — Sysmon | Medium | 06 May 2026
 
-### CyberDefenders Labs
-- [ ] BlueSky Ransomware
-- [ ] PacketMaze
+### TryHackMe
+*(coming soon)*
+
+### LetsDefend
+*(coming soon)*
+
+### CyberDefenders
+*(coming soon)*
+
+---
 
 ## Certifications
 | Certification | Status | Date |
 |--------------|--------|------|
-| OCSP — Offenso | Completed | 2026 |
-| CompTIA Security+ | In Progress | Target Sept 2026 |
-| TryHackMe SOC L1 | In Progress | — |
+| OCSP — Offenso | ✅ Completed | 2026 |
+| CompTIA Security+ | 🔄 In Progress | Sept 2026 |
+
+---
 
 ## Tools Practiced
-Splunk · Wireshark · VirusTotal · MITRE ATT&CK · 
-Nmap · Burp Suite · Wazuh
+Splunk · Wireshark · VirusTotal · 
+MITRE ATT&CK · Burp Suite · Kali Linux
