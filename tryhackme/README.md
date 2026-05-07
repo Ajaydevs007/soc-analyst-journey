@@ -1,5 +1,6 @@
-
 # TryHackMe Writeups
+SOC Level 1 Path — room by room documentation
 
-
-- [x] Junior Security Analyst Intro ✅ 06 May 2026
+## Completed
+- [x] 01 — Junior Security Analyst Intro
+- [x] 02 — SOC Role in Blue Team
