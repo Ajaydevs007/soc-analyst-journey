@@ -37,3 +37,25 @@ RECOMMENDATIONS:
 1. Block 118.194.247.28 at perimeter firewall
 2. Review WAF rules - request reached server unblocked
 3. Monitor WebServer1000 for delayed indicators
+
+
+
+
+
+
+
+
+
+## Status: Incomplete — Revisit Later
+
+Investigated response size comparison and endpoint 
+terminal history. Classification unclear — 
+walkthrough indicates successful but response 
+size analysis suggested otherwise.
+
+Need to revisit: Boolean blind SQLi logic and 
+how SQLmap determines injection success.
+
+Key question to research: How does consistent 
+200 response across SQLmap payloads confirm 
+successful injection vs failed injection?
