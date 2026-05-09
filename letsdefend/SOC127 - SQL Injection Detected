@@ -1,0 +1,39 @@
+Alert: SOC127 - SQL Injection Detected
+EventID: 235 | Date: Mar 07, 2024, 12:51 PM
+
+INVESTIGATION SUMMARY:
+
+Source IP: 118.194.247.28 (China Unicom, Beijing)
+Destination: 172.16.20.12 (WebServer1000)
+Tool Identified: sqlmap/1.7.2 (confirmed via User-Agent)
+
+ATTACK ANALYSIS:
+Decoded URL payload contained three attack types:
+1. SQL Injection - UNION SELECT targeting information_schema.tables
+2. XSS - <script>alert("XSS")</script> injection attempt
+3. OS Command Injection - EXEC xp_cmdshell('cat /etc/passwd')
+
+42 requests found in Log Management from same source IP.
+Confirmed automated SQLmap scan - not a planned test.
+
+IP REPUTATION:
+VirusTotal: 10/92 engines flagged as malicious
+AbuseIPDB: Confirmed malicious - China Unicom BGP AS4808
+
+ATTACK SUCCESS DETERMINATION:
+Method 1 - Response size comparison:
+Normal page response: 1860 bytes
+Attack response: 865 bytes
+Smaller response confirms server returned error - payload did not execute.
+
+Method 2 - Endpoint terminal history:
+Checked WebServer1000 terminal history around attack time.
+No suspicious commands found.
+No evidence of xp_cmdshell execution.
+
+VERDICT: True Positive - Attack NOT Successful
+
+RECOMMENDATIONS:
+1. Block 118.194.247.28 at perimeter firewall
+2. Review WAF rules - request reached server unblocked
+3. Monitor WebServer1000 for delayed indicators
