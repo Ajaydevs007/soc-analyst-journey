@@ -13,21 +13,6 @@ into Cybersecurity and SOC Operations.
 
 ---
 
-## Completed Labs & Challenges
-
-### Blue Team Labs Online
-- [x] Log Analysis — Sysmon | Medium | 06 May 2026
-
-### TryHackMe
-*(coming soon)*
-
-### LetsDefend
-*(coming soon)*
-
-### CyberDefenders
-*(coming soon)*
-
----
 
 ## Certifications
 | Certification | Status | Date |
