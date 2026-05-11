@@ -49,3 +49,64 @@ URL2PNG result: "Blog has been removed"
 Page has been taken down — likely reported
 
 ## Attack Chain Reconstruction
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Key Technical Concepts Learned
+
+### SMTP
+Simple Mail Transfer Protocol — the standard
+protocol for sending emails between mail servers.
+Understanding SMTP headers helps trace email origin.
+
+### X-Originating-IP
+Email header that reveals the IP address of the
+server that originally sent the email.
+Critical for tracing attack origin beyond
+mail server hops.
+
+### Email Bounce Attack Technique
+Attacker submitted malicious content via website
+contact form. The website's automated notification
+system forwarded the malicious URL to the target.
+The bounce message made it appear legitimate —
+coming from a real website notification system.
+
+### Safe Analysis Tools
+Always use isolated tools for phishing analysis:
+- Thunderbird — email client with sandboxing
+- Sublime Text — pure text, no execution
+- URL2PNG — screenshot service, no direct access
+- whois tools — web based, no local risk
+
+## MITRE ATT&CK Mapping
+| Technique | ID | Description |
+|-----------|-----|-------------|
+| Phishing | T1566 | Email-based attack delivery |
+| Phishing for Information | T1598 | Harvesting via malicious URL |
+| Acquire Infrastructure — Web Services | T1583.006 | Using Blogspot to host phishing page |
+
+## One Thing to Remember
+Never open phishing email attachments or URLs
+in your normal browser or text editor.
+Always use isolated safe tools — Thunderbird,
+Sublime Text, URL2PNG, any.run sandbox.
+The goal is to analyze without executing.
+Even a text editor can trigger file associations
+that execute malicious content.
+
+## Difficulty I Faced
+Understanding the email bounce chain — why
+the originating IP was different from the
+attacker IP. Resolved by tracing the full
+SMTP header chain step by step.
