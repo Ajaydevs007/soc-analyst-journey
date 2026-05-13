@@ -1,0 +1,35 @@
+CVE-2026-31431 "Copy Fail" — Complete Beginner's Guide
+
+  Chapter 1 — Foundation Concepts
+Before understanding the vulnerability you need to understand four basic concepts. Everything else builds on these.
+What is the Linux Kernel?
+Think of a computer like a company.
+Applications (Chrome, Python scripts) = Employees
+Operating System = Management layer
+Linux Kernel = The CEO
+Hardware (CPU, RAM, Disk) = The factory floor
+The kernel is the most powerful software on the system. It controls everything — memory, CPU, file access, network. When the kernel does something, no other software can stop it or question it.
+This is why kernel vulnerabilities are so dangerous. If an attacker controls the kernel, they control everything.
+What is Privilege Escalation?
+Normal user (you) → can read your own files
+Root user → can read, write, delete EVERYTHING
+Privilege escalation is going from normal user to root without permission.
+CVE-2026-31431 is a local privilege escalation vulnerability in the Linux kernel that allows an unprivileged user on an affected system to escalate to root. TryHackMe
+What is the Page Cache?
+When Linux reads a file from disk — it stores a copy in RAM for speed. This RAM copy is called the page cache.
+File on disk: /usr/bin/su (setuid binary)
+         ↓
+Linux reads it into RAM
+         ↓
+Page cache: in-memory copy of the file
+         ↓
+Every program that runs /usr/bin/su
+uses this cached copy
+Key insight: If you can modify the page cache — you change what programs execute — without touching the disk file at all.
+The flaw allows a local user to modify the kernel's cached copy of a file in memory without changing the file on disk. Because the modification exists only in the page cache, the underlying file on disk remains unchanged. Standard disk forensics would not detect the alteration. CyberDefenders
+What is a Setuid Binary?
+Some programs need to run with root privileges even when a normal user executes them. These are called setuid binaries.
+/usr/bin/su     — switch user (needs root)
+/usr/bin/sudo   — run as superuser (needs root)
+/usr/bin/passwd — change password (needs root)
+When you run su — even as a normal user — it temporarily runs as root to do its job. If you corrupt the page cache copy of su — you control what root executes.
