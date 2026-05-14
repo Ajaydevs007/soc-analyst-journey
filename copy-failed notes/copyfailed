@@ -1,6 +1,4 @@
-CVE-2026-31431 "Copy Fail" — Complete Beginner's Guide
-
-  Chapter 1 — Foundation Concepts
+Chapter 1 — Foundation Concepts
 Before understanding the vulnerability you need to understand four basic concepts. Everything else builds on these.
 What is the Linux Kernel?
 Think of a computer like a company.
@@ -33,3 +31,214 @@ Some programs need to run with root privileges even when a normal user executes 
 /usr/bin/sudo   — run as superuser (needs root)
 /usr/bin/passwd — change password (needs root)
 When you run su — even as a normal user — it temporarily runs as root to do its job. If you corrupt the page cache copy of su — you control what root executes.
+
+Chapter 2 — The Vulnerability Explained Simply
+What is AF_ALG?
+AF_ALG is a socket type that exposes the kernel's crypto subsystem to unprivileged userspace. A user can open a socket, bind to any AEAD template, and invoke encryption or decryption on arbitrary data. No privileges required. TryHackMe
+In simple terms — AF_ALG lets normal users ask the kernel to encrypt or decrypt data. This is legitimate and useful. The problem is in how one specific part of it handles memory.
+What is splice()?
+splice() transfers data between file descriptors and pipes without copying, passing page cache pages by reference. When a user splices a file into a pipe and then into an AF_ALG socket, the socket's input scatterlist holds direct references to the kernel's cached pages of that file. TryHackMe
+In simple terms — splice() is a fast way to move data. Instead of copying data, it just shares a reference to the same memory. This is the efficiency feature that created the vulnerability.
+The Root Cause — Simple Explanation
+Copy Fail is a logic bug in the Linux kernel's authencesn cryptographic template. It lets an unprivileged local user trigger a deterministic, controlled 4-byte write into the page cache of any readable file on the system. TryHackMe
+Break that down:
+Logic bug = not a memory corruption, a logical mistake
+authencesn = a specific encryption template in the kernel
+4-byte write = can write exactly 4 bytes anywhere
+page cache of any readable file = target any file
+The attacker can write 4 bytes into the in-memory copy of any file they can read. Since setuid binaries are readable by everyone — they become the target.
+Why is 4 bytes enough?
+4 bytes sounds tiny. But in a compiled binary — 4 bytes at the right location can change a conditional jump instruction. Change one jump — change whether the program checks permissions or not. Change that check — get root.
+
+Chapter 3 — The Attack Chain Step by Step
+Phase 5: By corrupting kernel structures associated with credentials or execution context, the attacker escalates their process to UID 0. This completes the transition from unprivileged user to full root without touching the network. At this point, kernel trust boundaries are broken, SELinux/AppArmor protections are effectively neutralized, and local security controls are bypassed. TryHackMe
+Here is the complete attack chain in plain language:
+Step 1 — Attacker has local access
+(shell account, compromised service,
+malicious container, CI/CD runner)
+
+Step 2 — Open AF_ALG socket
+No privileges needed — any user can do this
+
+Step 3 — splice() a setuid binary into the socket
+/usr/bin/su is readable by everyone
+splice() gives kernel a reference to its page cache
+
+Step 4 — Trigger the authencesn scratch write
+The crypto template writes to the scatterlist
+which now points to the page cache of su
+
+Step 5 — 4-byte write lands in su's page cache
+The in-memory copy of su is now modified
+The disk file is untouched
+
+Step 6 — Execute modified su
+su runs as root (it is setuid)
+But the code it executes is now attacker-controlled
+Root shell obtained
+What makes this different from previous bugs?
+Dirty Cow required winning a race condition in the VM subsystem's copy-on-write path. It often needed multiple attempts and sometimes crashed the system. Dirty Pipe was version-specific and required precise pipe buffer manipulation. Copy Fail is a straight-line logic flaw. It triggers without races, retries, or crash-prone timing windows. TryHackMe
+This means:
+
+No timing tricks needed
+Works every single time
+Does not crash the system
+Same script works on every Linux distribution
+
+The entire exploit is a short Python script using only standard library modules. No compiled payloads, no dependency installation. TryHackMe
+
+Chapter 4 — Why Cloud and Kubernetes Makes It Critical
+On a normal Linux server
+Attacker needs: a shell account on the machine. If SSH is locked down and no users can log in — risk is low.
+On Kubernetes — completely different story
+In a typical Kubernetes cluster, containerised workloads run on worker nodes. Any container that can exec into a pod on a node has process-level access on that node. Multi-tenant clusters where multiple teams or applications share worker nodes are the worst-case scenario: one compromised or malicious tenant container can escalate to node root. TryHackMe
+In simple terms:
+Kubernetes cluster has many containers
+All containers share the same worker node (Linux host)
+If one container is compromised —
+attacker runs exploit from inside container —
+escalates to ROOT of the entire worker node —
+now controls ALL containers on that node —
+can read all secrets, tokens, passwords
+of every other application on the node
+On Kubernetes worker nodes, successful exploitation can give an attacker full node control, access to pod-mounted secrets, service account tokens, and pivot paths toward other workloads or the control plane. LetsDefend
+The blast radius in Kubernetes
+One compromised container
+        ↓
+Copy Fail exploit runs
+        ↓
+Root on worker node
+        ↓
+Access to ALL pods on that node
+        ↓
+Steal service account tokens
+        ↓
+Use tokens to access Kubernetes API
+        ↓
+Potentially compromise entire cluster
+        ↓
+Access to all secrets across all namespaces
+This is why your trainer called it cloud and Kubernetes privilege escalation — the local privilege escalation becomes a full cluster compromise.
+
+Chapter 5 — Affected Systems
+The vulnerability affects virtually all Linux distributions running kernels released from 2017 until patched versions are applied, including Ubuntu 24.04 LTS, Amazon Linux 2023, Red Hat Enterprise Linux 10.1, SUSE 16, Debian, Fedora, and Arch Linux. The CVSS score is 7.8 (High). TryHackMe
+Kernel versions affected: kernel 5.15 through 6.6. Disclosed May 5, 2026. TryHackMe
+DistributionStatusUbuntu 22.04 / 24.04 LTSPatch availableDebian BookwormPatch availableRed Hat Enterprise LinuxPatch availableAWS Linux 2023Patch availableSUSEPatch availableFedoraPatch availableUbuntu 26.04 and laterNot affected
+
+Chapter 6 — Detection
+How to detect exploitation attempts
+Review logs for signs of exploitation. Because this vulnerability impacts a large swath of Linux devices, it is strongly recommended to do the following: Patch or update your distribution's kernel packages or block AF_ALG socket creation. TryHackMe
+Detection indicators:
+1. Unexpected UID 0 transitions
+   Normal user process suddenly running as root
+   Check: audit logs, /var/log/auth.log
+
+2. AF_ALG socket creation by unusual processes
+   Watch for: socket(AF_ALG...) syscalls
+   from non-cryptographic applications
+
+3. splice() calls chained with AF_ALG sockets
+   Unusual combination in process syscall trace
+
+4. Python script execution followed by
+   privilege change events
+   The exploit is a Python script
+
+5. setuid binary execution after splice()
+   /usr/bin/su or sudo executed by unusual parent
+Splunk detection query
+index=* source="/var/log/audit/audit.log"
+| search "AF_ALG" OR "splice" OR "algif_aead"
+| stats count by user, process, src_ip
+| where count > 5
+In Kubernetes — detect container escape
+Unusual process on worker node not matching
+any running container workload
+
+kubectl exec activity followed by
+privilege escalation events on the node
+
+Unexpected access to /proc/1/environ
+or other host-level proc filesystem entries
+from container processes
+
+Chapter 7 — Defense and Remediation
+Priority 1 — Patch immediately
+Patch your node kernel before you patch anything else. Run uname -r after reboot to confirm patched kernel version is loaded. TryHackMe
+bash# Ubuntu/Debian
+sudo apt update && sudo apt upgrade linux-image-generic
+sudo reboot
+
+# RHEL/CentOS
+sudo dnf update kernel
+sudo reboot
+
+# Verify after reboot
+uname -r
+# Should show patched version
+Priority 2 — Disable vulnerable module if patching is not immediate
+Disable the algif_aead kernel module persistently on all affected systems until a patched kernel is available: Medium
+bashecho "install algif_aead /bin/false" > /etc/modprobe.d/disable-algif.conf
+rmmod algif_aead 2>/dev/null || true
+This workaround does not affect dm-crypt/LUKS, kTLS, IPsec/XFRM, OpenSSL, GnuTLS, NSS, or SSH. Medium
+Priority 3 — Kubernetes specific mitigations
+Restrict kubectl exec RBAC permissions. Apply a seccomp profile filtering the specific mmap flag sequence. These mitigations reduce attack surface but are not substitutes for patching. TryHackMe
+yaml# Kubernetes seccomp profile to block AF_ALG
+apiVersion: v1
+kind: Pod
+spec:
+  securityContext:
+    seccompProfile:
+      type: RuntimeDefault
+  containers:
+  - name: app
+    securityContext:
+      allowPrivilegeEscalation: false
+      runAsNonRoot: true
+      readOnlyRootFilesystem: true
+Priority 4 — Block AF_ALG in containers
+For untrusted workloads, CI runners, or Kubernetes clusters, block AF_ALG socket creation using seccomp profiles regardless of your patch state. Security Blue Team
+Priority 5 — Check if you are vulnerable
+bash# Check kernel version
+uname -r
+
+# Check if vulnerable module is loaded
+lsmod | grep algif_aead
+
+# If module is present and kernel is unpatched
+# = you are vulnerable
+
+Chapter 8 — MITRE ATT&CK Mapping
+TechniqueIDHow it appliesExploit for Privilege EscalationT1068Core technique — exploiting kernel bugContainer EscapeT1611Escaping container to host nodeAccess Token ManipulationT1134UID 0 transition = root tokenHijack Execution FlowT1574Corrupting setuid binary executionDefense EvasionT1070In-memory only — no disk artifacts
+
+Chapter 9 — Comparison to Previous Famous Bugs
+BugYearTypeReliabilityRequiresDirty Cow CVE-2016-51952016Race conditionLow — needed timingMultiple attemptsDirty Pipe CVE-2022-08472022Pipe bufferMediumSpecific kernel versionsCopy Fail CVE-2026-314312026Logic flawHigh — deterministicJust local access
+Copy Fail is considered more dangerous than both predecessors because it is reliable, portable, and tiny.
+
+Summary — Everything in One Diagram
+COPY FAIL — CVE-2026-31431
+
+WHAT:    Linux kernel logic bug in crypto subsystem
+WHERE:   algif_aead module + splice() + page cache
+WHO:     Any local user — no special privileges needed
+HOW:     4-byte write to page cache of setuid binary
+RESULT:  Root shell on Linux system
+
+NORMAL SERVER:
+Local user → exploit → root on server
+
+KUBERNETES:
+Container → exploit → root on worker node →
+steal secrets → compromise entire cluster
+
+DETECTION:
+Unexpected UID 0 transitions
+AF_ALG socket creation by unusual processes
+Python execution followed by privilege change
+
+DEFENSE:
+1. Patch kernel immediately — reboot required
+2. Disable algif_aead module if cannot patch
+3. Apply seccomp profiles in Kubernetes
+4. Restrict kubectl exec permissions
+5. Monitor for UID 0 transitions in audit logs
