@@ -1,0 +1,85 @@
+# SOC169 - Possible IDOR Attack Detected | LetsDefend Walkthrough
+
+## Overview
+
+This repository contains my investigation and analysis of the **SOC169 - Possible IDOR Attack Detected** alert from the LetsDefend SOC platform.
+
+The investigation focused on:
+- IDOR attack analysis
+- HTTP traffic investigation
+- Sequential parameter enumeration
+- Response analysis
+- Endpoint investigation
+- Incident response workflow
+
+The alert was classified as a **True Positive** because unauthorized access attempts against multiple user records were successfully identified.
+
+---
+
+# Alert Information
+
+| Field | Value |
+|---|---|
+| Alert Name | SOC169 - Possible IDOR Attack Detected |
+| Platform | LetsDefend |
+| Category | IDOR |
+| Classification | True Positive |
+| Status | Closed |
+
+---
+
+# Indicators of Compromise (IOCs)
+
+## Source IP
+
+```text
+134.209.118.137
+```
+
+## Destination IP
+
+```text
+172.16.17.15
+```
+
+## Target Endpoint
+
+```text
+https://172.16.17.15/get_user_info/
+```
+
+## Enumerated Parameters
+
+```text
+user_id=1
+user_id=2
+user_id=3
+user_id=4
+user_id=5
+```
+
+---
+
+# MITRE ATT&CK Mapping
+
+| Technique | ID |
+|---|---|
+| Exploit Public-Facing Application | T1190 |
+| Valid Accounts / Unauthorized Access | T1078 |
+| Data from Information Repositories | T1213 |
+
+---
+
+# Final Verdict
+
+```text
+TRUE POSITIVE
+```
+
+The investigation confirmed successful IDOR exploitation involving sequential user ID enumeration against a public-facing web application endpoint.
+
+---
+
+# Disclaimer
+
+This project was created for educational and cybersecurity training purposes using the LetsDefend SOC simulation platform.
