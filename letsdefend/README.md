@@ -5,3 +5,4 @@
 - [x] SOC175 - Possible CVE-2022-41082 Exploitation | [Walkthrough] (https://medium.com/@ajaydevsv/investigating-a-proxynotshell-exploitation-attempt-soc175-powershell-found-in-requested-url-7f9399a8eff0)
 
 - [x] SOC169 - Possible IDOR Attack Detected | [Walkthrough](https://medium.com/@ajaydevsv/medium-walkthrough-ec8560230910?postPublishedType=repub)
+- [x] SOC274 - Palo Alto PAN-OS Command Injection Exploitation (CVE-2024-3400)
