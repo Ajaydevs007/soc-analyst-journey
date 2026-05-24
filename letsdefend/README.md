@@ -6,3 +6,4 @@
 
 - [x] SOC169 - Possible IDOR Attack Detected | [Walkthrough](https://medium.com/@ajaydevsv/medium-walkthrough-ec8560230910?postPublishedType=repub)
 - [x] SOC274 - Palo Alto PAN-OS Command Injection Exploitation (CVE-2024-3400)
+- [x] SOC235 - Atlassian Confluence Broken Access Control 0-Day CVE-2023-22515 
