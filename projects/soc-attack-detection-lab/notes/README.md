@@ -39,3 +39,15 @@ Commands executed:
 - whoami
 - hostname
 - ipconfig
+
+## Sysmon Process Creation Investigation
+
+Investigated Sysmon Event ID 1 logs generated from manually executed Windows commands.
+
+Observed:
+- Process Image
+- CommandLine
+- ParentImage
+- User context
+
+This validated that Sysmon was successfully capturing detailed process execution telemetry.
