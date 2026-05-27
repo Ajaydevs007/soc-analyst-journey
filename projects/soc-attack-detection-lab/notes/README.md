@@ -30,3 +30,12 @@ Verified that the Sysmon service was successfully running after installation on 
 Verified that Sysmon Operational logs were successfully being generated inside Event Viewer after installation.
 
 Observed multiple Sysmon Event ID 1 (Process Creation) events confirming active telemetry collection.
+
+## Initial Telemetry Generation
+
+Executed basic Windows enumeration commands to intentionally generate Sysmon process creation telemetry for validation and later Splunk ingestion testing.
+
+Commands executed:
+- whoami
+- hostname
+- ipconfig
