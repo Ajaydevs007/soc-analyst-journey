@@ -14,4 +14,9 @@ Downloaded the SwiftOnSecurity Sysmon configuration template and placed the conf
 
 ## Sysmon Installation
 
-Installed Sysmon on the Windows victim VM using the SwiftOnSecurity configuration template to enable advanced endpoint telemetry collection.
+Installed Sysmon on the Windows victim VM using the SwiftOnSecurity configuration template.
+
+Verified successful installation of:
+- Sysmon service
+- Sysmon driver
+- telemetry configuration
