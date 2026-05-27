@@ -11,3 +11,7 @@ Validated end-to-end connectivity between the Windows victim VM and Splunk Enter
 Downloaded Sysmon from Microsoft Sysinternals and extracted the binaries on the Windows victim VM.
 
 Downloaded the SwiftOnSecurity Sysmon configuration template and placed the configuration file inside the Sysmon directory to enable enhanced telemetry collection.
+
+## Sysmon Installation
+
+Installed Sysmon on the Windows victim VM using the SwiftOnSecurity configuration template to enable advanced endpoint telemetry collection.
