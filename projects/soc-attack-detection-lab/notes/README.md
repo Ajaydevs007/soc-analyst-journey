@@ -20,3 +20,7 @@ Verified successful installation of:
 - Sysmon service
 - Sysmon driver
 - telemetry configuration
+
+## Sysmon Service Verification
+
+Verified that the Sysmon service was successfully running after installation on the Windows victim VM.
