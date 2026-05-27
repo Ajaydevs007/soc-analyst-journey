@@ -24,3 +24,9 @@ Verified successful installation of:
 ## Sysmon Service Verification
 
 Verified that the Sysmon service was successfully running after installation on the Windows victim VM.
+
+## Sysmon Event Verification
+
+Verified that Sysmon Operational logs were successfully being generated inside Event Viewer after installation.
+
+Observed multiple Sysmon Event ID 1 (Process Creation) events confirming active telemetry collection.
