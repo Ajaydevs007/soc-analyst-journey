@@ -66,3 +66,13 @@ Configured the forwarder to send telemetry to the Splunk Enterprise host at:
 ## Splunk Forwarder Service Verification
 
 Verified that the Splunk Universal Forwarder service was successfully running on the Windows victim VM after installation.
+
+## Splunk Log Collection Configuration
+
+Configured Splunk Universal Forwarder to collect:
+- Windows Application logs
+- Security logs
+- System logs
+- Sysmon Operational logs
+
+All logs were configured to forward into the Splunk "main" index.
