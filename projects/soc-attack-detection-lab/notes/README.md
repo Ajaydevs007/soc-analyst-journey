@@ -55,3 +55,10 @@ This validated that Sysmon was successfully capturing detailed process execution
 ## Splunk Universal Forwarder Preparation
 
 Downloaded Splunk Universal Forwarder on the Windows victim VM to enable forwarding of Windows and Sysmon telemetry to Splunk Enterprise.
+
+## Splunk Universal Forwarder Installation
+
+Installed Splunk Universal Forwarder on the Windows victim VM.
+
+Configured the forwarder to send telemetry to the Splunk Enterprise host at:
+192.168.29.237:9997
