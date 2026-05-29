@@ -76,3 +76,7 @@ Configured Splunk Universal Forwarder to collect:
 - Sysmon Operational logs
 
 All logs were configured to forward into the Splunk "main" index.
+
+## Splunk Forwarder Restart
+
+Restarted the Splunk Universal Forwarder service to apply the updated Windows and Sysmon log collection configuration.
