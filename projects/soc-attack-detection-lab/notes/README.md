@@ -62,3 +62,7 @@ Installed Splunk Universal Forwarder on the Windows victim VM.
 
 Configured the forwarder to send telemetry to the Splunk Enterprise host at:
 192.168.29.237:9997
+
+## Splunk Forwarder Service Verification
+
+Verified that the Splunk Universal Forwarder service was successfully running on the Windows victim VM after installation.
