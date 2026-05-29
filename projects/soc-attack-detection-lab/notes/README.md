@@ -51,3 +51,7 @@ Observed:
 - User context
 
 This validated that Sysmon was successfully capturing detailed process execution telemetry.
+
+## Splunk Universal Forwarder Preparation
+
+Downloaded Splunk Universal Forwarder on the Windows victim VM to enable forwarding of Windows and Sysmon telemetry to Splunk Enterprise.
