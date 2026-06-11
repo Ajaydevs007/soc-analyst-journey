@@ -81,6 +81,11 @@ All logs were configured to forward into the Splunk "main" index.
 
 Restarted the Splunk Universal Forwarder service to apply the updated Windows and Sysmon log collection configuration.
 
-## Initial Splunk Telemetry Validation
+## Sysmon Telemetry Validation in Splunk
+Verified that Sysmon Operational logs were successfully reaching Splunk after configuring the Universal Forwarder.
 
-Verified successful ingestion of Windows and Sysmon logs into Splunk Enterprise from the Windows victim VM using Splunk Universal Forwarder.
+Query used:
+
+index=windows_lab source="WinEventLog:Microsoft-Windows-Sysmon/Operational"
+
+Observed multiple Sysmon events inside Splunk confirming successful telemetry ingestion from the Windows victim VM.
