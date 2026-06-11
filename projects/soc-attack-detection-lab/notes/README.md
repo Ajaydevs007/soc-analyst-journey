@@ -90,7 +90,7 @@ index=windows_lab source="WinEventLog:Microsoft-Windows-Sysmon/Operational"
 
 Observed multiple Sysmon events inside Splunk confirming successful telemetry ingestion from the Windows victim VM.
 
-Event ID 1 - Process Creation
+## Event ID 1 - Process Creation
 
 Executed several processes manually from Command Prompt to generate Sysmon Process Creation events.
 
@@ -108,7 +108,7 @@ index=windows_lab EventCode=1 ParentImage="*cmd.exe"
 
 Observed parent-child relationships between cmd.exe and the spawned processes.
 
-Event ID 3 - Network Connection
+## Event ID 3 - Network Connection
 
 Generated outbound HTTPS traffic using PowerShell.
 
@@ -122,3 +122,18 @@ index=windows_lab EventCode=3
 | table _time Image DestinationIp DestinationPort
 
 Observed PowerShell establishing outbound network connections over port 443.
+
+## Event ID 22 - DNS Query
+
+Generated DNS query telemetry using PowerShell.
+
+Command executed:
+
+Resolve-DnsName github.com
+
+Splunk query used:
+
+index=windows_lab EventCode=22
+| table _time Image QueryName QueryResults
+
+Observed successful DNS resolution events inside Splunk. 
