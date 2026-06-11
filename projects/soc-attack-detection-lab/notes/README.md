@@ -107,3 +107,18 @@ index=windows_lab EventCode=1 ParentImage="*cmd.exe"
 | table _time Image CommandLine ParentImage
 
 Observed parent-child relationships between cmd.exe and the spawned processes.
+
+Event ID 3 - Network Connection
+
+Generated outbound HTTPS traffic using PowerShell.
+
+Command executed:
+
+Invoke-WebRequest https://google.com
+
+Splunk query used:
+
+index=windows_lab EventCode=3
+| table _time Image DestinationIp DestinationPort
+
+Observed PowerShell establishing outbound network connections over port 443.
