@@ -89,3 +89,21 @@ Query used:
 index=windows_lab source="WinEventLog:Microsoft-Windows-Sysmon/Operational"
 
 Observed multiple Sysmon events inside Splunk confirming successful telemetry ingestion from the Windows victim VM.
+
+Event ID 1 - Process Creation
+
+Executed several processes manually from Command Prompt to generate Sysmon Process Creation events.
+
+Commands executed:
+
+cmd
+notepad
+calc
+mspaint
+
+Splunk query used:
+
+index=windows_lab EventCode=1 ParentImage="*cmd.exe"
+| table _time Image CommandLine ParentImage
+
+Observed parent-child relationships between cmd.exe and the spawned processes.
