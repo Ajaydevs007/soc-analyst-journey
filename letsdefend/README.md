@@ -17,3 +17,5 @@
 
 - [x] SOC127 - SQL Injection Detected 
 
+- [x]  SOC120 - Phishing Mail Detected - Internal to Internal | [Walkthrough] (https://medium.com/@ajaydevsv/investigating-a-phishing-email-with-a-malicious-zip-attachment-soc140-phishing-mail-detected-5b05fa0754ca)
+
