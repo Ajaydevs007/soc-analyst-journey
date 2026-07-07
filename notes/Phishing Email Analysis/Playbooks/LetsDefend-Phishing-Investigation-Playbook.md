@@ -2,9 +2,7 @@
 
 ## Objective
 
-This playbook provides a structured workflow for investigating phishing email alerts in LetsDefend.
-
-Follow each step sequentially during every phishing investigation.
+This playbook provides a structured workflow for investigating phishing email alerts in LetsDefend and follows the incident response process used by SOC analysts.
 
 ---
 
@@ -12,193 +10,74 @@ Follow each step sequentially during every phishing investigation.
 
 ## Objective
 
-Collect basic information about the suspicious email before beginning analysis.
+Collect all basic information about the suspicious email before beginning the investigation.
+
+### Collect Basic Information
+
+| Question | Evidence | Record |
+|----------|----------|--------|
+| When was the email sent? | Date / Event Time | Date & Time |
+| What is the SMTP Address? | SMTP Address / Received Header | SMTP IP |
+| What is the sender address? | From / Source Address | Sender Email |
+| What is the recipient address? | To / Destination Address | Recipient Email |
+| What is the subject? | Subject | Email Subject |
+| Is the mail content suspicious? | Email Body | Yes / No |
+| Are there any attachments? | MIME / Attachment Section | Yes / No |
+| Are there any URLs? | Email Body | Yes / No |
 
 ---
 
-### Step 1 - Identify the Email Timestamp
-
-Question:
-
-When was the email sent?
-
-Evidence:
-
-- Date Header
-- Event Time
-
-Record:
-
-- Date
-- Time
-- Timezone
-
----
-
-### Step 2 - Identify the SMTP Address
-
-Question:
-
-What is the email's SMTP Address?
-
-Evidence:
-
-- SMTP Address
-- Received Header
-
-Record:
-
-- SMTP IP
-- Mail Server IP
-
-Purpose:
-
-- Reputation Check
-- WHOIS Lookup
-- Cisco Talos
-- AbuseIPDB
-- VirusTotal
-
----
-
-### Step 3 - Identify the Sender
-
-Question:
-
-What is the sender address?
-
-Evidence:
-
-- From
-- Source Address
-
-Record:
-
-- Email Address
-- Domain
-
----
-
-### Step 4 - Identify the Recipient
-
-Question:
-
-What is the recipient address?
-
-Evidence:
-
-- To
-- Destination Address
-
-Record:
-
-- Email Address
-
----
-
-### Step 5 - Review the Email Content
-
-Question:
-
-Is the mail content suspicious?
-
-Look for:
-
-- Urgency
-- Credential Requests
-- Fake Login Pages
-- Invoice Themes
-- COVID Themes
-- Gift Cards
-- Payment Requests
-- Grammar Mistakes
-- Social Engineering
-
-Decision:
-
-- Suspicious
-- Not Suspicious
-
----
-
-### Step 6 - Check for URLs or Attachments
-
-Question:
-
-Are there any attachments or URLs?
-
-Inspect:
-
-- Hyperlinks
-- Buttons
-- QR Codes
-- Attached Files
-
-Decision:
-
-- Yes
-- No
-
----
-
-# Phase 2 - Analyze URLs / Attachments
+# Phase 2 - URL / Attachment Analysis
 
 ## Objective
 
-Determine whether the URL or attachment is malicious.
+Determine whether the URLs or attachments are malicious.
 
-Perform ONLY if URLs or attachments exist.
+### If URLs Exist
 
----
-
-### URL Analysis
-
-Collect:
-
-- Full URL
-- Domain
-- Subdomain
-
-Check Using:
+Perform:
 
 - VirusTotal
 - URLScan
 - URLHouse
 - WHOIS
+- Browser Reputation
 
-Determine:
+Decision:
 
 - Malicious
-- Non-malicious
+- Non-Malicious
 
 ---
 
-### Attachment Analysis
+### If Attachments Exist
 
 Collect:
 
 - File Name
 - Extension
-- Hash
+- SHA256 Hash
 
-Check Using:
+Analyze Using:
 
 - VirusTotal
 - Hybrid Analysis
 - Any.Run
 
-Determine:
+Decision:
 
 - Malicious
-- Non-malicious
+- Non-Malicious
 
 ---
 
 # Phase 3 - Dynamic Analysis (If Required)
 
-Execute suspicious content inside a sandbox.
+If reputation checks are inconclusive:
 
-Recommended Platforms:
+Execute inside a sandbox.
+
+Recommended:
 
 - Any.Run
 - Hybrid Analysis
@@ -208,11 +87,12 @@ Recommended Platforms:
 Observe:
 
 - Process Creation
-- Network Connections
-- Registry Changes
 - File Creation
-- Persistence
+- Registry Changes
+- Network Connections
+- DNS Requests
 - C2 Communication
+- Persistence
 
 Collect IOCs.
 
@@ -224,27 +104,98 @@ Collect IOCs.
 
 Determine whether the email reached the user's mailbox.
 
-Question:
-
-Was the email delivered?
-
 Check:
 
-Device Action
+**Device Action**
 
 Possible Values:
 
 | Device Action | Meaning |
-|--------------|---------|
-| Blocked | Email was blocked before reaching the user |
-| Delivered | Email reached the mailbox |
+|---------------|---------|
+| Delivered | Email reached the user |
+| Blocked | Email blocked before delivery |
 | Quarantined | Email moved to quarantine |
-| Deleted | Email removed automatically |
+| Deleted | Email automatically removed |
 
 Decision:
 
 - Delivered
 - Not Delivered
+
+---
+
+# Phase 5 - Delete Malicious Email
+
+## Objective
+
+Prevent additional users from interacting with the phishing email.
+
+Action:
+
+Delete the malicious email from the recipient's mailbox.
+
+Verification:
+
+- Email successfully deleted
+- No longer accessible to the user
+
+---
+
+# Phase 6 - Check User Activity
+
+## Objective
+
+Determine whether any user interacted with the phishing email.
+
+Investigate:
+
+Log Management
+
+Search For:
+
+- C2 Domains
+- C2 IP Addresses
+- Malicious URLs
+- File Hashes
+- Process Execution
+
+Determine:
+
+- Opened
+- Not Opened
+
+If Opened:
+
+Record:
+
+- User
+- Hostname
+- Timestamp
+- Process Name
+- Network Connection
+
+---
+
+# Phase 7 - Containment
+
+## Objective
+
+Prevent further compromise.
+
+If malicious activity is confirmed:
+
+Perform containment through the EDR platform.
+
+Actions:
+
+- Isolate Endpoint
+- Stop Malicious Process
+- Block IOC
+- Prevent Lateral Movement
+
+Verification:
+
+- Endpoint Contained
 
 ---
 
@@ -260,19 +211,17 @@ Decision:
 
 ☐ Record Recipient
 
-☐ Review Subject
+☐ Record Subject
 
 ☐ Review Email Body
 
-☐ Determine if Content is Suspicious
+☐ Check Attachments
+
+☐ Check URLs
 
 ---
 
 ## URL / Attachment Analysis
-
-☐ URLs Present
-
-☐ Attachments Present
 
 ☐ VirusTotal
 
@@ -280,15 +229,17 @@ Decision:
 
 ☐ URLHouse
 
+☐ Any.Run
+
 ☐ Hybrid Analysis
 
-☐ Any.Run
+☐ Determine Reputation
 
 ---
 
 ## Dynamic Analysis
 
-☐ Execute in Sandbox (If Required)
+☐ Execute Sandbox (If Required)
 
 ☐ Observe Processes
 
@@ -296,19 +247,29 @@ Decision:
 
 ☐ Observe Registry
 
-☐ Collect IOCs
+☐ Observe Persistence
 
 ---
 
-## Delivery Status
+## User Impact
 
-☐ Check Device Action
+☐ Email Delivered?
 
-☐ Delivered?
+☐ Email Deleted?
 
-☐ Blocked?
+☐ User Opened URL?
 
-☐ Quarantined?
+☐ User Executed File?
+
+---
+
+## Containment
+
+☐ Endpoint Isolated
+
+☐ IOC Blocked
+
+☐ Incident Contained
 
 ---
 
@@ -317,30 +278,21 @@ Decision:
 Collect:
 
 - Sender Email
-
 - Recipient Email
-
 - SMTP IP
-
 - Subject
-
-- Domains
-
 - URLs
-
+- Domains
 - Attachments
-
 - SHA256 Hash
-
-- File Names
-
+- MD5 Hash
 - IP Addresses
-
-- C2 Servers
-
+- C2 Domains
+- C2 IPs
 - Registry Keys
-
 - Process Names
+- Parent Process
+- Child Process
 
 ---
 
@@ -354,19 +306,15 @@ Parse Email
 
 ↓
 
-Collect Email Metadata
+Header Analysis
 
 ↓
 
-Analyze Header
+Static Analysis
 
 ↓
 
-Analyze URLs
-
-↓
-
-Analyze Attachments
+URL / Attachment Analysis
 
 ↓
 
@@ -374,51 +322,158 @@ Dynamic Analysis (If Required)
 
 ↓
 
-Collect IOCs
-
-↓
-
 Check Delivery Status
 
 ↓
 
-Determine Verdict
+Delete Malicious Email
 
 ↓
 
-Recommend Containment
+Check User Activity
+
+↓
+
+Contain Endpoint (If Required)
+
+↓
+
+Collect IOCs
+
+↓
+
+Determine Final Verdict
+
+↓
+
+Close Incident
 
 ---
 
-# Final Investigation Report
+# Artifacts to Collect
 
-## Basic Information
+## Email Information
 
-- Sender
-- Recipient
-- SMTP IP
+- Sender Email
+- Recipient Email
 - Subject
-- Time Sent
+- Date & Time
+- SMTP IP
+- Message-ID
 
-## Analysis
+---
 
-- Header Analysis
-- URL Analysis
-- Attachment Analysis
-- Dynamic Analysis
+## Header Artifacts
 
-## Indicators of Compromise
+- From
+- Reply-To
+- Return-Path
+- Received Headers
+- SPF Result
+- DKIM Result
+- DMARC Result
 
-- Domains
-- URLs
-- IP Addresses
-- Hashes
+---
 
-## Delivery Status
+## URL Artifacts
 
-- Delivered
-- Blocked
-- Quarantined
+- Full URL
+- Domain
+- Subdomain
+- Redirect URL
+- URL Reputation
+
+---
+
+## Attachment Artifacts
+
+- File Name
+- File Extension
+- File Size
+- SHA256 Hash
+- MD5 Hash
+- File Reputation
+
+---
+
+## Network Artifacts
+
+- Source IP
+- Destination IP
+- C2 Domain
+- DNS Queries
+- HTTP Requests
+
+---
+
+## Endpoint Artifacts
+
+- Hostname
+- Username
+- Process Name
+- Parent Process
+- Child Process
+- Registry Changes
+- Scheduled Tasks
+- Persistence Mechanisms
+
+---
+
+# Analyst Notes Template
+
+## Alert Summary
+
+- Alert Name:
+- Alert Time:
+- Severity:
+
+---
+
+## Email Details
+
+- Sender:
+- Recipient:
+- Subject:
+- SMTP IP:
+
+---
+
+## Analysis Performed
+
+- Header Analysis:
+- URL Analysis:
+- Attachment Analysis:
+- Dynamic Analysis:
+
+---
+
+## Findings
+
+- Email spoofing detected? (Yes/No)
+- Malicious URL? (Yes/No)
+- Malicious Attachment? (Yes/No)
+- User Clicked Link? (Yes/No)
+- User Executed File? (Yes/No)
+
+---
+
+## Indicators of Compromise (IOCs)
+
+- Domains:
+- URLs:
+- IP Addresses:
+- File Hashes:
+
+---
+
+## Containment Actions
+
+- Email Deleted
+- Endpoint Isolated
+- IOC Blocked
+- User Notified
+
+---
 
 ## Final Verdict
 
@@ -427,3 +482,9 @@ Recommend Containment
 - Phishing
 - Malware Delivery
 - Business Email Compromise (BEC)
+
+---
+
+## Recommendation
+
+Document the lessons learned, update detection rules if necessary, and monitor for similar phishing attempts targeting other users.
