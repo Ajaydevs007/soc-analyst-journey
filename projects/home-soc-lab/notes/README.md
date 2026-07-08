@@ -265,3 +265,16 @@ Expected telemetry depends on how the attack interacts with the target system. T
 
 
 
+## Case Study 2 Preparation — Brute Force Detection
+
+Objective:
+
+Validate that Windows authentication auditing and Splunk Security log ingestion are functioning correctly before performing a simulated brute-force attack.
+
+Verification Steps:
+
+- Confirmed Logon auditing configuration.
+- Verified Security logs are searchable in Splunk.
+- Identified available authentication services for the Hydra attack.
+
+
