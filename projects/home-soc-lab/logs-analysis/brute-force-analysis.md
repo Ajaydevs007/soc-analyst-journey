@@ -64,15 +64,15 @@ Multiple Windows Security Event ID 4625 (Failed Logon) events originating from t
 
 | Component | Details |
 |-----------|---------|
-| Hypervisor | |
-| Attacker | |
-| Victim | |
-| SIEM | |
-| Log Forwarder | |
-| Endpoint Telemetry | |
-| Network | |
+| Hypervisor | VirtualBox |
+| Attacker | Kali Linux (10.10.10.10) |
+| Victim | Windows 10 (10.10.10.20) |
+| SIEM | Splunk Enterprise |
+| Log Forwarder | Splunk Universal Forwarder |
+| Endpoint Telemetry | Sysmon (SwiftOnSecurity Configuration) |
+| Network | Internal Network (`soc-lab-net`) |
 
-## Telemetry Sources
+
 
 ## Telemetry Sources
 
