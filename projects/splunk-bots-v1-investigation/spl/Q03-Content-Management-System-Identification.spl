@@ -1,0 +1,46 @@
+###########################################################
+# Q03 - Content Management System Identification
+# Objective:
+# Identify the CMS used by imreallynotbatman.com
+###########################################################
+
+###########################################################
+# View all requested URI paths
+###########################################################
+
+index=botsv1 sourcetype=stream:http
+site="imreallynotbatman.com"
+| stats count by uri_path
+| sort -count
+
+###########################################################
+# Search for Joomla-specific resources
+###########################################################
+
+index=botsv1 sourcetype=stream:http
+site="imreallynotbatman.com"
+uri_path="*joomla*"
+| stats count by uri_path
+| sort -count
+
+###########################################################
+# Alternative CMS Fingerprinting
+###########################################################
+
+index=botsv1 sourcetype=stream:http
+site="imreallynotbatman.com"
+(
+    uri_path="*/administrator/*"
+    OR uri_path="*/templates/*"
+    OR uri_path="*/media/*"
+)
+| table _time src_ip dest_ip uri_path
+
+###########################################################
+# Optional Validation
+###########################################################
+
+index=botsv1 sourcetype=stream:http
+site="imreallynotbatman.com"
+dest_content="*Joomla*"
+| table _time uri_path dest_content

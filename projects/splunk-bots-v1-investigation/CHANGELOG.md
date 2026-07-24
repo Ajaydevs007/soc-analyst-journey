@@ -9,3 +9,14 @@ Added:
 - Incident report
 - SPL queries
 - Evidence documentation
+
+## Investigation 03
+
+Added:
+- Joomla CMS identification investigation
+- Joomla reconnaissance detection
+- CMS investigation playbook
+- Timeline
+- Incident report
+- Artifacts
+- SPL queries
