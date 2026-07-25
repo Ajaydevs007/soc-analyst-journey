@@ -20,3 +20,16 @@ Added:
 - Incident report
 - Artifacts
 - SPL queries
+
+
+## Investigation 04
+
+Added:
+
+- Website defacement investigation
+- Malicious download detection
+- Defacement response playbook
+- Incident report
+- Timeline
+- Artifacts
+- SPL queries

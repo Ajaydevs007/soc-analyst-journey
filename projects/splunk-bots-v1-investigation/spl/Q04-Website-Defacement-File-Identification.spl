@@ -1,0 +1,40 @@
+###########################################################
+# Q04 - Website Defacement File Identification
+###########################################################
+
+###########################################################
+# Step 1 - Identify outbound HTTP destinations
+###########################################################
+
+index=botsv1 sourcetype=stream:http
+src_ip="192.168.250.70"
+| stats count by dest_ip
+
+###########################################################
+# Step 2 - Investigate first external IP
+###########################################################
+
+index=botsv1
+sourcetype=fgt_utm
+srcip="192.168.250.70"
+dstip="108.161.187.134"
+| table _time hostname url catdesc action
+
+###########################################################
+# Step 3 - Investigate second external IP
+###########################################################
+
+index=botsv1
+sourcetype=fgt_utm
+srcip="192.168.250.70"
+dstip="23.22.63.114"
+| table _time hostname url catdesc action
+
+###########################################################
+# Step 4 - Identify downloaded file
+###########################################################
+
+index=botsv1
+sourcetype=fgt_utm
+url="*.jpeg*"
+| table _time srcip dstip hostname url
