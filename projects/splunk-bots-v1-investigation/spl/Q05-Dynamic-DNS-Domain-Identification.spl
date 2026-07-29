@@ -1,0 +1,36 @@
+###########################################################
+# Q05 - Dynamic DNS Domain Identification
+###########################################################
+
+###########################################################
+# Step 1 - Search for the Known Malicious IP
+###########################################################
+
+index=botsv1 sourcetype=stream:dns
+23.22.63.114
+
+###########################################################
+# Step 2 - Display Relevant DNS Fields
+###########################################################
+
+index=botsv1 sourcetype=stream:dns
+23.22.63.114
+| table _time src_ip dest_ip name host_addr reply_code
+
+###########################################################
+# Step 3 - Expand Multi-value Fields
+###########################################################
+
+index=botsv1 sourcetype=stream:dns
+23.22.63.114
+| mvexpand name
+| mvexpand host_addr
+| table _time src_ip dest_ip name host_addr
+
+###########################################################
+# Step 4 - Identify All Queries to the FQDN
+###########################################################
+
+index=botsv1 sourcetype=stream:dns
+name="prankglassinebracket.jumpingcrab.com"
+| table _time src_ip dest_ip host_addr reply_code

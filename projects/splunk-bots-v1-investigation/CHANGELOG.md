@@ -33,3 +33,15 @@ Added:
 - Timeline
 - Artifacts
 - SPL queries
+
+## Investigation 05
+
+Added:
+
+- Dynamic DNS domain investigation
+- DNS-based detection rule
+- Dynamic DNS response playbook
+- Incident report
+- Timeline
+- Artifacts
+- SPL queries
