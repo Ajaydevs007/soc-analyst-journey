@@ -71,3 +71,15 @@ Added:
 - Timeline
 - Artifacts
 - Investigation limitations
+
+## Investigation 09
+
+Added:
+
+- Executable upload investigation
+- File upload detection rule
+- Investigation playbook
+- Incident report
+- Timeline
+- Artifacts
+- SPL queries

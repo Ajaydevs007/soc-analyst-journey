@@ -1,0 +1,40 @@
+#############################################################
+# Q08 - Brute Force Password Attack Investigation
+#############################################################
+
+# Step 1 - Identify clients communicating with the web server
+
+index=botsv1 sourcetype="stream:http"
+dest_ip=192.168.250.70
+| stats count by src_ip
+
+# Step 2 - Filter HTTP POST requests
+
+index=botsv1 sourcetype="stream:http"
+dest_ip=192.168.250.70
+http_method=POST
+| stats count by src_ip
+
+# Step 3 - Identify login submissions
+
+index=botsv1 sourcetype="stream:http"
+dest_ip=192.168.250.70
+http_method=POST
+form_data="*username*passwd*"
+| stats count by src_ip
+
+# Step 4 - Verify repeated login attempts
+
+index=botsv1 sourcetype="stream:http"
+src_ip=23.22.63.114
+http_method=POST
+form_data="*username*passwd*"
+| table _time request
+| sort -_time
+
+# Step 5 - Review HTTP status codes
+
+index=botsv1 sourcetype="stream:http"
+src_ip=23.22.63.114
+uri_path="/joomla/administrator/index.php"
+| stats count by status

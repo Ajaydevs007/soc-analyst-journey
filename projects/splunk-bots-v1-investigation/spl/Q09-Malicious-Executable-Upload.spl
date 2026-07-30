@@ -1,0 +1,28 @@
+###############################################################
+# Q09 - Malicious Executable Upload Investigation
+###############################################################
+
+# Step 1 - Review HTTP POST Requests
+
+index=botsv1 sourcetype=stream:http
+dest_ip="192.168.250.70"
+http_method=POST
+
+# Step 2 - Search for Multipart Uploads
+
+index=botsv1 sourcetype=stream:http
+dest_ip="192.168.250.70"
+http_method=POST
+multipart/form-data
+
+# Step 3 - Identify Uploaded Executables
+
+index=botsv1 sourcetype=stream:http
+dest_ip="192.168.250.70"
+http_method=POST
+multipart/form-data
+*.exe
+
+# Result
+
+3791.exe
