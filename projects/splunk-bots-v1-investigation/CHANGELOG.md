@@ -58,3 +58,16 @@ Added:
 - Timeline
 - Artifacts
 - SPL queries
+
+
+## Investigation 07
+
+Added:
+
+- Historical OSINT investigation
+- Threat intelligence enrichment detection
+- OSINT playbook
+- Incident report
+- Timeline
+- Artifacts
+- Investigation limitations
