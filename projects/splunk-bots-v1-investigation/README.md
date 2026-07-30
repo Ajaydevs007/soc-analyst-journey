@@ -5,3 +5,4 @@
 - ✅ Q03 – Content Management System Identification (Joomla)
 - ✅ Q04 – Website Defacement File Identification
 - ✅ Q05 – Dynamic DNS Domain Identification
+- ✅ Q06 – Identified attacker pre-staged infrastructure IP (23.22.63.114)

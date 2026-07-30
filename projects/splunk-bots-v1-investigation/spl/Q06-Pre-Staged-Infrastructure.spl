@@ -1,0 +1,26 @@
+############################################################
+# Q06 - Pre-Staged Infrastructure
+############################################################
+
+############################################################
+# Step 1 - Search for the Malicious Domain
+############################################################
+
+index=botsv1 sourcetype=stream:dns
+name="prankglassinebracket.jumpingcrab.com"
+
+############################################################
+# Step 2 - Display Relevant Fields
+############################################################
+
+index=botsv1 sourcetype=stream:dns
+name="prankglassinebracket.jumpingcrab.com"
+| table _time src_ip dest_ip name host_addr reply_code
+
+############################################################
+# Step 3 - Verify the Associated IP
+############################################################
+
+index=botsv1 sourcetype=stream:dns
+host_addr="23.22.63.114"
+| table _time src_ip name host_addr

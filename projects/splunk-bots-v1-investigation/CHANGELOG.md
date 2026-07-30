@@ -45,3 +45,16 @@ Added:
 - Timeline
 - Artifacts
 - SPL queries
+
+
+## Investigation 06
+
+Added:
+
+- Pre-staged infrastructure investigation
+- DNS detection rule
+- Investigation playbook
+- Incident report
+- Timeline
+- Artifacts
+- SPL queries
