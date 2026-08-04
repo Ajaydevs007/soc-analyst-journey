@@ -8,3 +8,4 @@
 - ✅ Q06 – Identified attacker pre-staged infrastructure IP (23.22.63.114)
 - ✅ Q07 – Historical OSINT attribution of attacker infrastructure
 - ✅ Q09 – Identified malicious executable uploaded to the compromised Joomla server (3791.exe)
+- ✅ Q10 – Identified MD5 hash of uploaded executable (3791.exe)

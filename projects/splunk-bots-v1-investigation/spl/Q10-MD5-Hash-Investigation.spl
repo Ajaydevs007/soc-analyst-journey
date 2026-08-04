@@ -1,0 +1,22 @@
+###############################################################
+# Q10 - MD5 Hash of Uploaded Executable
+###############################################################
+
+# Initial targeted search
+
+index=botsv1
+sourcetype="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"
+(TargetFilename="*3791.exe" OR Image="*3791.exe")
+
+# Broad search for the executable
+
+index=botsv1
+sourcetype="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"
+3791.exe
+
+# Refined query using ParentImage
+
+index=botsv1
+sourcetype="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"
+ParentImage="*3791.exe"
+| table _time EventCode ParentImage Image CommandLine Hashes

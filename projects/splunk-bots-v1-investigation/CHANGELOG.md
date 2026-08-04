@@ -83,3 +83,18 @@ Added:
 - Timeline
 - Artifacts
 - SPL queries
+
+
+## Investigation 10
+
+Added:
+
+- Malware hash investigation
+- Sysmon execution analysis
+- Hash extraction workflow
+- Detection rule
+- Investigation playbook
+- Incident report
+- Timeline
+- Artifacts
+- SPL queries
