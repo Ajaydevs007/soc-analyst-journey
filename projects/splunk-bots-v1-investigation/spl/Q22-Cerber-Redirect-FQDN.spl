@@ -1,0 +1,6 @@
+index=botsv1
+sourcetype="stream:dns"
+src_ip="192.168.250.100"
+"query_type{}"=A
+| stats count by query
+| sort - count

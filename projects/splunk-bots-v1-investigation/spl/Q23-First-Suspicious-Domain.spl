@@ -1,0 +1,7 @@
+index=botsv1
+sourcetype=suricata
+src_ip="192.168.250.100"
+event_type=http
+| dedup http.hostname
+| table _time http.hostname
+| sort _time

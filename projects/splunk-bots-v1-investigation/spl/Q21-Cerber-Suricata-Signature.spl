@@ -1,0 +1,6 @@
+index=botsv1
+sourcetype=suricata
+event_type=alert
+signature=*Cerber*
+| stats count by alert.signature_id
+| sort count

@@ -1,0 +1,6 @@
+index=botsv1
+host=we8105desk
+sourcetype="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"
+EventCode=2
+TargetFilename="C:\\Users\\bob.smith.WAYNECORPINC\\*.txt"
+| stats dc(TargetFilename) as encrypted_txt_files

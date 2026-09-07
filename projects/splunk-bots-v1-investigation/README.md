@@ -9,3 +9,23 @@
 - ✅ Q07 – Historical OSINT attribution of attacker infrastructure
 - ✅ Q09 – Identified malicious executable uploaded to the compromised Joomla server (3791.exe)
 - ✅ Q10 – Identified MD5 hash of uploaded executable (3791.exe)
+- ✅ Q12 – Identified historical hex code associated with customized Po1s0n1vy malware
+- ✅ Q13 – Identified disjointed hexadecimal WHOIS information from Po1s0n1vy staged domain
+- ✅ Q14 - First brute-force password identified: `12345678`
+- ✅ Q15 – Identified the six-character Coldplay password used in the brute-force attack (`yellow`)
+- ✅ Q15 – Correct CMS Admin Password
+- ✅ Q17 — Average Password Length
+- ✅ Q18 — Password Discovery to Compromised Login
+- ✅ Q19 — Unique Brute-Force Passwords
+- ✅ Q20 — we8105desk IP Address
+- ✅ Q21 — Cerber Suricata Signature
+- ✅ Q22 Cerber Redirect FQDN
+- ✅ Q23 — First Suspicious Domain
+- ✅ Q24 Q24 — VBScript Field Length
+- ✅ Q25 — USB Key Inserted by Bob Smith
+- ✅ Q26 — File Server IP
+- ✅ Q27  Distinct PDFs Encrypted
+- ✅ Q28  121214.tmp ParentProcessId
+- ✅ Q29  Bob Smith TXT File Encryption
+- ✅ Q30 — Cerber Cryptor File
+- ✅ Q31 — Ransomware Obfuscation Technique

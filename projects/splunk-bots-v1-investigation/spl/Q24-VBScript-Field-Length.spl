@@ -1,0 +1,7 @@
+index=botsv1
+sourcetype="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"
+host="we8105desk"
+*.vbs
+| eval field_length=len(CommandLine)
+| table _time CommandLine field_length
+| sort - field_length

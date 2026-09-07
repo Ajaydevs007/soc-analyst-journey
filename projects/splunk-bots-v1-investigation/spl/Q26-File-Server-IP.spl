@@ -1,0 +1,5 @@
+index=botsv1
+sourcetype="stream:smb"
+src_ip="192.168.250.100"
+| stats count by dest_ip
+| sort - count

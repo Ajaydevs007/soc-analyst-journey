@@ -1,0 +1,6 @@
+index=botsv1
+sourcetype="WinEventLog:*"
+"*.pdf"
+dest="we9041srv.waynecorpinc.local"
+Source_Address="192.168.250.100"
+| stats dc(Relative_Target_Name) as encrypted_pdfs

@@ -1,0 +1,5 @@
+index=botsv1
+host="we8105desk"
+| search USB OR "removable" OR "device"
+| table _time host user EventCode Image CommandLine Message
+| sort _time

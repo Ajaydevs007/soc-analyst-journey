@@ -1,0 +1,6 @@
+index=botsv1
+sourcetype="stream:http"
+src_ip="192.168.250.100"
+(uri="*mhtr.jpg*" OR site="solidaritedeproximite.org")
+| table _time src_ip site uri dest_ip
+| sort _time
