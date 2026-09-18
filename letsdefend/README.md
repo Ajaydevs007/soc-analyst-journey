@@ -22,3 +22,7 @@
 - [x]  SOC114 – Malicious Attachment Detected – Phishing Alert | [Walkthrough] (https://medium.com/@ajaydevsv/investigating-a-malicious-attachment-phishing-email-soc114-malicious-attachment-detected-869125f78201)
 
 - [x]  SOC132 – Same Malicious File Found on Multiple Sources | [Walkthrough] (https://medium.com/@ajaydevsv/investigating-a-malicious-file-found-across-multiple-endpoints-letsdefend-soc132-walkthrough-737236579f9e)
+
+- [x]  SOC137 – Malicious File/Script Download Attempt | [Walkthrough] (https://medium.com/@ajaydevsv/investigating-a-malicious-file-script-download-attempt-letsdefend-soc137-walkthrough-844bb62367c0)
+
+- [x]  SOC138 – Detected Suspicious XLS File | [Walkthrough] (https://medium.com/@ajaydevsv/investigating-a-suspicious-xlsm-file-letsdefend-soc138-walkthrough-16adeabbed8b)
