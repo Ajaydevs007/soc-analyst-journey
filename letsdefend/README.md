@@ -26,3 +26,7 @@
 - [x]  SOC137 – Malicious File/Script Download Attempt | [Walkthrough] (https://medium.com/@ajaydevsv/investigating-a-malicious-file-script-download-attempt-letsdefend-soc137-walkthrough-844bb62367c0)
 
 - [x]  SOC138 – Detected Suspicious XLS File | [Walkthrough] (https://medium.com/@ajaydevsv/investigating-a-suspicious-xlsm-file-letsdefend-soc138-walkthrough-16adeabbed8b)
+
+- [x]  SOC153 – Suspicious PowerShell Script Executed [Walkthrough] (https://medium.com/@ajaydevsv/soc153-suspicious-powershell-script-executed-letsdefend-soc-investigation-c379caa77b91)
+
+- [x]  SOC104 — Malware Detected [Walkthrough] (https://medium.com/@ajaydevsv/soc104-malware-detected-investigating-a-suspected-winrar-malware-alert-091dfe03d87a)
