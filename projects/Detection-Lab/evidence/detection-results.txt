@@ -1,0 +1,36 @@
+Detection Lab — KQL Detection Evidence
+
+Detection:
+SOC-LAB - Kerberos Password Spray Detection
+
+Event ID:
+4771
+
+Detection Window:
+15 minutes
+
+Threshold:
+3 or more unique accounts from the same source IP
+
+Observed Source IP:
+10.10.10.30
+
+Failed Attempts:
+9
+
+Unique Accounts:
+3
+
+Accounts:
+analyst01
+user01
+user02
+
+First Seen:
+[insert actual timestamp]
+
+Last Seen:
+[insert actual timestamp]
+
+Detection Result:
+PASSWORD SPRAY PATTERN DETECTED

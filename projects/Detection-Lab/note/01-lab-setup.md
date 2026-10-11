@@ -1,8 +1,27 @@
 # 01 — Lab Setup
 
+This phase establishes the isolated virtual network and the three virtual machines used throughout the Detection Lab.
+
+## Lab Components
+
+| Machine | Operating System | Role | Internal IP |
+|---|---|---|---:|
+| `SOC-LAB-DC` | Windows Server 2022 Standard Evaluation | Domain Controller / AD DS | `10.10.10.10` |
+| `SOC-LAB-WIN10` | Windows 10 Pro 22H2 | Windows Endpoint | `10.10.10.20` |
+| Kali Linux | Kali Linux | Attacker / Security Testing | `10.10.10.30` |
+
+### Virtualization
+
+- Hypervisor: VirtualBox
+- Internal Network: `soc-lab-net`
+- Internal Subnet: `10.10.10.0/24`
+- Default Gateway on internal network: None
+
+---
+
 ## Windows Server VM
 
-Created the Windows Server virtual machine that will later become the Active Directory Domain Controller.
+The Windows Server virtual machine was created as the future Active Directory Domain Controller.
 
 ### VM Configuration
 
@@ -16,90 +35,163 @@ Created the Windows Server virtual machine that will later become the Active Dir
 | Virtual Disk | 60 GB |
 | Hypervisor | VirtualBox |
 
-## Network Configuration
+---
+
+## Windows Server Network Configuration
 
 The Server VM uses two network adapters.
 
 ### Adapter 1 — NAT
 
-Used for outbound Internet connectivity.
+The NAT adapter provides outbound Internet connectivity for the lab.
 
 ```text
-IPv4: 10.0.2.15
+IPv4 Address: 10.0.2.15
 Subnet Mask: 255.255.255.0
-Gateway: 10.0.2.2
+Default Gateway: 10.0.2.2
+```
 
-Internet connectivity was verified using:
+Internet connectivity was verified with:
 
+```text
 ping 8.8.8.8
+```
 
 Result:
 
+```text
 4 packets sent
 4 packets received
 0% packet loss
-
-
+```
 
 ### Adapter 2 — Internal Network
 
-Connected to the isolated VirtualBox internal network:
+The second adapter connects the server to the isolated VirtualBox network:
 
+```text
 Network: soc-lab-net
 
-Static IPv4 configuration:
-
-IPv4: 10.10.10.10
+IPv4 Address: 10.10.10.10
 Subnet Mask: 255.255.255.0
 Default Gateway: None
+```
 
-This interface will be used for communication between the Domain Controller, Windows 10 workstation, and Kali Linux attacker.
+This interface is used for communication between the Domain Controller, Windows 10 endpoint, and Kali Linux machine.
 
+---
 
-Current Architecture
+## Windows 10 VM
 
+A Windows 10 virtual machine was created as the lab endpoint.
 
-                 Internet
-                    │
-                  NAT
-                    │
-             10.0.2.15
-                    │
-             ┌─────────────┐
-             │ SOC-LAB-DC  │
-             │ Windows     │
-             │ Server 2022 │
-             └──────┬──────┘
-                    │
-              10.10.10.10
-                    │
-              soc-lab-net
-                    │
-          ┌─────────┴─────────┐
-          │                   │
-       Kali Linux          Windows 10
-       Attacker            Workstation
+### VM Configuration
 
+| Setting | Configuration |
+|---|---|
+| VM Name | `SOC-LAB-WIN10` |
+| OS | Windows 10 Pro 22H2 |
+| RAM | 4096 MB |
+| CPU | 2 vCPUs |
+| Virtual Disk | 60 GB |
+| Hypervisor | VirtualBox |
 
+Internal network configuration:
 
+```text
+IPv4 Address: 10.10.10.20
+Subnet Mask: 255.255.255.0
+Default Gateway: None
+DNS: 10.10.10.10
+```
 
-Evidence
+---
 
-screenshots/01-lab-setup/server-network-configuration.png
-screenshots/01-lab-setup/windows-server-installed.png
+## Kali Linux VM
 
+Kali Linux was configured as the attacker and security-testing machine.
 
-Status
-[x] Windows Server VM created
-[x] Windows Server 2022 installed
-[x] Computer renamed to SOC-LAB-DC
-[x] NAT connectivity verified
-[x] Internal lab network configured
-[ ] Active Directory Domain Services
+Internal network configuration:
 
+```text
+IPv4 Address: 10.10.10.30
+Subnet Mask: 255.255.255.0
+Default Gateway: None
+```
 
+The Kali internal interface was connected to:
 
+```text
+soc-lab-net
+```
 
+---
+
+## Three-Machine Network
+
+The isolated SOC lab network was successfully configured using the VirtualBox Internal Network `soc-lab-net`.
+
+```text
+                         Internet
+                            │
+                           NAT
+                            │
+              ┌─────────────┼─────────────┐
+              │             │             │
+            Kali          DC          Windows 10
+         10.0.2.15      10.0.2.15      10.0.2.15
+              │             │             │
+              └──────── soc-lab-net ─────┘
+                       10.10.10.0/24
+              │             │             │
+        10.10.10.30   10.10.10.10   10.10.10.20
+              │             │             │
+           Attacker    Domain Controller   Endpoint
+```
+
+The internal network does not use a default gateway.
+
+---
+
+## Connectivity Verification
+
+Connectivity between all three machines was tested.
+
+### Windows 10 → Domain Controller
+
+```text
+Packets: Sent = 4, Received = 4, Lost = 0 (0% loss)
+```
+
+### Domain Controller → Windows 10
+
+```text
+Packets: Sent = 4, Received = 4, Lost = 0 (0% loss)
+```
+
+### Kali → Domain Controller
+
+```text
+4 packets transmitted
+4 packets received
+0% packet loss
+Average RTT: 0.710 ms
+```
+
+### Kali → Windows 10
+
+```text
+4 packets transmitted
+4 packets received
+0% packet loss
+Average RTT: 0.650 ms
+```
+
+### Result
+
+All three lab machines successfully communicated over the isolated `soc-lab-net` network.
+
+---
 
 ## Windows Firewall Troubleshooting
 
@@ -111,141 +203,106 @@ Initial test:
 
 ```text
 Windows 10 → 10.10.10.10
+
 Request timed out
 100% packet loss
+```
 
-The same communication worked when Windows Firewall was temporarily disabled, confirming that VirtualBox networking and the IP configuration were functioning correctly.
+The communication worked when Windows Firewall was temporarily disabled. This confirmed that the VirtualBox networking and IP configuration were functioning correctly.
 
-Investigation
+### Investigation
 
-The network profiles were checked using:
+The Windows network profiles were checked using:
 
+```powershell
 Get-NetConnectionProfile
+```
 
-The soc-lab-net interface was identified as:
+The isolated lab interface was identified as a Public/Unidentified network.
 
-InterfaceAlias   : Ethernet 2
-NetworkCategory  : Public
-IPv4Connectivity : LocalNetwork
+Because the network was classified as Public, Windows Firewall was blocking inbound ICMP traffic.
 
-Because the isolated lab network was classified as a Public/Unidentified network, Windows Firewall was blocking inbound ICMP traffic.
+### Resolution
 
-Resolution
+Instead of leaving Windows Firewall disabled, a narrowly scoped ICMPv4 rule was created.
 
-Instead of disabling the firewall, a narrowly scoped ICMPv4 rule was created on both Windows machines.
+Example rule on the Domain Controller:
 
-The rule allows ICMP Echo Requests only within the SOC lab subnet:
+```powershell
+New-NetFirewallRule `
+  -DisplayName "SOC-LAB Allow ICMPv4 Echo" `
+  -Direction Inbound `
+  -Protocol ICMPv4 `
+  -IcmpType 8 `
+  -LocalAddress 10.10.10.10 `
+  -RemoteAddress 10.10.10.0/24 `
+  -Action Allow `
+  -Profile Any
+```
 
-10.10.10.0/24
-
-Example rule:
-
-New-NetFirewallRule -DisplayName "SOC-LAB Allow ICMPv4 Echo" `
--Direction Inbound `
--Protocol ICMPv4 `
--IcmpType 8 `
--LocalAddress 10.10.10.10 `
--RemoteAddress 10.10.10.0/24 `
--Action Allow `
--Profile Any
-
-A corresponding rule was created on Windows 10 for 10.10.10.20.
-
-Final Verification
-
-Windows 10 → Windows Server:
-
-Packets: Sent = 4, Received = 4, Lost = 0 (0% loss)
-
-Windows Server → Windows 10:
-
-Packets: Sent = 4, Received = 4, Lost = 0 (0% loss)
-Result
-
-The Windows Server and Windows 10 VMs can now communicate successfully over the isolated soc-lab-net network while Windows Firewall remains enabled.
-
-This confirmed that the issue was firewall policy rather than VirtualBox networking or IP configuration.
-
-
-Also update the **Status** section at the bottom of that file:
-
-```markdown
-- [x] Windows Server VM created
-- [x] Windows Server 2022 installed
-- [x] Renamed to SOC-LAB-DC
-- [x] NAT connectivity verified
-- [x] Internal lab network configured
-- [x] Windows 10 VM created
-- [x] Windows 10 installed
-- [x] Renamed to SOC-LAB-WIN10
-- [x] Windows Server ↔ Windows 10 connectivity verified
-- [x] Firewall rules configured without disabling Windows Firewall
-- [ ] Active Directory Domain Services
-
-
-
-## Three-Machine Network Verification
-
-The isolated SOC lab network was successfully configured using the VirtualBox
-Internal Network `soc-lab-net`.
-
-### Lab Network
-
-| Machine | Internal IP | Purpose |
-|---|---:|---|
-| SOC-LAB-DC | 10.10.10.10 | Domain Controller / AD DS |
-| SOC-LAB-WIN10 | 10.10.10.20 | Windows endpoint |
-| Kali Linux | 10.10.10.30 | Attacker / security testing |
-
-Subnet:
+A corresponding rule was created on Windows 10 using its internal address:
 
 ```text
-10.10.10.0/24
+10.10.10.20
+```
 
-The internal network does not use a default gateway.
+### Final Verification
 
-Connectivity Tests
-Windows 10 → Domain Controller
-Packets: Sent = 4, Received = 4, Lost = 0 (0% loss)
-Domain Controller → Windows 10
-Packets: Sent = 4, Received = 4, Lost = 0 (0% loss)
-Kali → Domain Controller
-4 packets transmitted, 4 received, 0% packet loss
-Average RTT: 0.710 ms
-Kali → Windows 10
-4 packets transmitted, 4 received, 0% packet loss
-Average RTT: 0.650 ms
-Network Status
+Windows Firewall remained enabled.
 
-The three lab machines can communicate successfully over the isolated
-soc-lab-net network.
+```text
+Windows 10 → Windows Server
+Sent = 4
+Received = 4
+Lost = 0
+```
 
-Windows Firewall remains enabled on the Windows machines, with narrowly
-scoped ICMP rules allowing communication within the lab subnet.
+```text
+Windows Server → Windows 10
+Sent = 4
+Received = 4
+Lost = 0
+```
 
-Current Architecture
-                 NAT / Internet
-                       │
-          ┌────────────┼────────────┐
-          │            │            │
-        Kali       SOC-LAB-DC   SOC-LAB-WIN10
-     10.0.2.15      10.0.2.15      10.0.2.15
-          │            │            │
-          └────── soc-lab-net ──────┘
-                 10.10.10.0/24
+### Result
 
-       Kali          DC           Windows 10
-   10.10.10.30   10.10.10.10    10.10.10.20
+The Windows Server and Windows 10 machines successfully communicated over the isolated lab network while Windows Firewall remained enabled.
 
+This confirmed that the original connectivity issue was caused by Windows Firewall policy rather than VirtualBox networking or IP configuration.
 
-Status
-[x] Three lab machines created
-[x] Internal network configured
-[x] Kali connected to soc-lab-net
-[x] Windows Server connected to soc-lab-net
-[x] Windows 10 connected to soc-lab-net
-[x] Kali → DC connectivity verified
-[x] Kali → Windows 10 connectivity verified
-[x] DC → Windows 10 connectivity verified
-[x] Windows 10 → DC connectivity verified
-[ ] Active Directory Domain Services
+---
+
+## Evidence
+
+Screenshots from this phase are stored under:
+
+```text
+../screenshots/01-lab-setup/
+```
+
+Relevant evidence includes:
+
+- Server network configuration
+- Windows Server installation
+- Windows 10 network configuration
+
+---
+
+## Status
+
+- [x] Windows Server VM created
+- [x] Windows Server 2022 installed
+- [x] Renamed to `SOC-LAB-DC`
+- [x] NAT connectivity verified
+- [x] Internal network configured
+- [x] Windows 10 VM created
+- [x] Windows 10 installed
+- [x] Renamed to `SOC-LAB-WIN10`
+- [x] Kali Linux VM connected
+- [x] `soc-lab-net` configured
+- [x] Windows Server ↔ Windows 10 connectivity verified
+- [x] Kali → Windows Server connectivity verified
+- [x] Kali → Windows 10 connectivity verified
+- [x] Windows Firewall remained enabled
+- [x] Scoped ICMP firewall rules configured
+- [x] Three-machine network verified

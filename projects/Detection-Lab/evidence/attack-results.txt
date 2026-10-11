@@ -1,0 +1,32 @@
+Detection Lab — Password Spray Attack Evidence
+
+Attack Tool:
+Kerbrute
+
+Attack Type:
+Kerberos Password Spray
+
+Target Domain:
+SOC-LAB.LOCAL
+
+Target Accounts:
+analyst01
+user01
+user02
+
+Source:
+Kali Linux
+
+Source IP:
+10.10.10.30
+
+Domain Controller:
+10.10.10.10
+
+Observed Windows Event:
+4771 — Kerberos Pre-Authentication Failure
+
+Result:
+3 accounts were tested with the controlled incorrect password.
+
+No production accounts or systems were targeted.
