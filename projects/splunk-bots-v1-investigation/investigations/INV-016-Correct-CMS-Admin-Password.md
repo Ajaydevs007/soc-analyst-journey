@@ -6,7 +6,7 @@ What was the correct password for admin access to the content management system 
 
 ## Answer
 
-batman
+[REDACTED]
 
 ## Target
 
@@ -40,7 +40,7 @@ endpoint using a normal browser user agent.
 
 The password submitted by this host was:
 
-batman
+[REDACTED]
 
 This distinguishes the successful/legitimate-looking administrative login from the
 automated brute-force traffic.
@@ -64,13 +64,13 @@ form_data="*username*passwd*"
 40.80.148.42 submitted:
 
 Username: admin
-Password: batman
+Password: [REDACTED]
 
 ## Conclusion
 
 The correct password for administrative access to the Joomla CMS was:
 
-batman
+[REDACTED]
 
 ## Evidence Type
 
