@@ -18,7 +18,7 @@ into Cybersecurity and SOC Operations.
 | Certification | Status | Date |
 |--------------|--------|------|
 | OCSP — Offenso | ✅ Completed | 2026 |
-| CompTIA Security+ | 🔄 In Progress | Sept 2026 |
+| CompTIA Security+ | 🔄 In Progress | 2026 |
 
 ---
 
