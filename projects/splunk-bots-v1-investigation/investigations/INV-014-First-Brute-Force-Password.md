@@ -93,7 +93,7 @@ The events were sorted by `_time` so that the earliest authentication attempt ap
 The first password observed was:
 
 ```text
-12345678
+[REDACTED]
 ```
 
 ---
@@ -103,7 +103,7 @@ The first password observed was:
 The first password used during the brute-force attack was:
 
 ```text
-12345678
+[REDACTED]
 ```
 
 The attack consisted of repeated HTTP POST requests against the Joomla administrator login endpoint.
@@ -135,7 +135,7 @@ form_data
         Sort by _time
                |
                v
-          12345678
+          [REDACTED]
 ```
 
 ---
@@ -148,7 +148,7 @@ form_data
 | Target IP | `192.168.250.70` |
 | HTTP Method | `POST` |
 | Authentication Endpoint | `/joomla/administrator/index.php` |
-| First Password | `12345678` |
+| First Password | `[REDACTED]` |
 
 ---
 
@@ -157,5 +157,5 @@ form_data
 Analysis of HTTP authentication requests showed that the first password attempted during the brute-force attack was:
 
 ```text
-12345678
+[REDACTED]
 ```
