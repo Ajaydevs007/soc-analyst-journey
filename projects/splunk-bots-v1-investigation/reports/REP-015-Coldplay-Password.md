@@ -13,7 +13,7 @@ Analysis of HTTP authentication requests from the Joomla brute-force attack iden
 The password corresponding to the relevant Coldplay song was identified as:
 
 ```text
-yellow
+[REDACTED]
 ```
 
 ---
@@ -25,9 +25,9 @@ yellow
 | Source IP | `23.22.63.114` |
 | Target IP | `192.168.250.70` |
 | Target | Joomla Administrator |
-| Password | `yellow` |
+| Password | `[REDACTED]` |
 | Password Length | 6 |
-| Associated Song | Yellow |
+| Associated Song | [REDACTED] |
 
 ---
 
