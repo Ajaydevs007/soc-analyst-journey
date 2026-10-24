@@ -11,9 +11,9 @@
 - ✅ Q10 – Identified MD5 hash of uploaded executable (3791.exe)
 - ✅ Q12 – Identified historical hex code associated with customized Po1s0n1vy malware
 - ✅ Q13 – Identified disjointed hexadecimal WHOIS information from Po1s0n1vy staged domain
-- ✅ Q14 - First brute-force password identified: `12345678`
-- ✅ Q15 – Identified the six-character Coldplay password used in the brute-force attack (`yellow`)
-- ✅ Q15 – Correct CMS Admin Password
+- ✅ Q14 — First brute-force password identified (credential value redacted)
+- ✅ Q15 — Identified a six-character Coldplay-song password pattern (credential value redacted)
+- ✅ Q16 — CMS administrator credential investigation (credential value redacted)
 - ✅ Q17 — Average Password Length
 - ✅ Q18 — Password Discovery to Compromised Login
 - ✅ Q19 — Unique Brute-Force Passwords
