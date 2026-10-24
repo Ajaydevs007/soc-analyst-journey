@@ -48,7 +48,7 @@ form_data="*username*passwd*"
 Successful credential observed:
 
 Username: admin
-Password: batman
+Password: [REDACTED]
 Source IP: 40.80.148.42
 
 ## Analyst Note
