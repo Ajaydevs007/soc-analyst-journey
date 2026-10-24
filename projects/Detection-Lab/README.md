@@ -368,19 +368,16 @@ Password Spray
 Detection
 [Detection and incident evidence](screenshots/04-detection/)
 
-📚 Documentation
+## 📚 Documentation
 
-Phase	Documentation
-
-Lab Setup	[01-lab-setup.md](note/01-lab-setup.md)
-Active Directory	[02-active-directory.md](note/02-active-directory.md)
-Domain Join	[03-domain-join.md](note/03-domain-join.md)
-Sentinel Setup	[04-sentinel-setup.md](note/04-sentinel-setup.md)
-Log Collection	[05-log-collection.md](note/05-log-collection.md)
-Password Spray	[06-password-spray.md](note/06-password-spray.md)
-KQL Detection	[07-kql-detection.md](note/07-kql-detection.md)
-Detection Query	[password-spray-detection.kql](kql-queries/password-spray-detection.kql)
-
+| Phase | Document |
+|---|---|
+| Lab setup | [01-lab-setup.md](note/01-lab-setup.md) |
+| Active Directory and domain join | [02-active-directory.md](note/02-active-directory.md) |
+| Sentinel setup and log ingestion | [03-sentinel-setup.md](note/03-sentinel-setup.md) |
+| Password-spray simulation | [04-password-spray.md](note/04-password-spray.md) |
+| KQL detection | [05-kql-detection.md](note/05-kql-detection.md) |
+| Detection query | [password-spray-detection.kql](kql-queries/password-spray-detection.kql) |
 
 Additional foundational notes:
 
