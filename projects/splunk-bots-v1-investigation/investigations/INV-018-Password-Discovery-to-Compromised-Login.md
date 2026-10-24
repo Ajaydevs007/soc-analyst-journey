@@ -11,11 +11,11 @@ identified the correct password and the compromised login?
 
 ## Correct Password
 
-batman
+[REDACTED]
 
 ## Investigation
 
-The correct password identified in the previous investigation was `batman`.
+The correct password identified in the previous investigation was `[REDACTED]`.
 
 Searching the HTTP authentication traffic for this password revealed two
 events.
@@ -55,7 +55,7 @@ sourcetype="stream:http"
 dest_ip="192.168.250.70"
 http_method=POST
 | rex field=form_data "passwd=(?<brutePassword>\w+)"
-| search brutePassword="batman"
+| search brutePassword="[REDACTED]"
 | sort 0 _time
 | delta _time as time_diff
 | table _time brutePassword time_diff
