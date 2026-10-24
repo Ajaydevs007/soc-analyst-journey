@@ -11,7 +11,7 @@ TL-014
 | 1 | Po1s0n1vy initiated brute-force activity |
 | 2 | HTTP POST requests were sent to the Joomla administrator login |
 | 3 | Multiple username/password combinations were attempted |
-| 4 | The first password observed was `12345678` |
+| 4 | The first password observed was `[REDACTED]` |
 | 5 | Continued authentication attempts were observed |
 | 6 | Later investigation identified successful authentication activity |
 
