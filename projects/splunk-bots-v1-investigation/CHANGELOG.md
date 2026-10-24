@@ -160,7 +160,7 @@ Added:
 Added investigation and detection documentation for the correct Joomla
 administrator password used against imreallynotbatman.com.
 
-Answer: batman
+Answer: [REDACTED]
 
 Related source IP:
 40.80.148.42
@@ -188,7 +188,7 @@ between discovery of the correct Joomla password and subsequent
 compromised login.
 
 Correct password:
-batman
+[REDACTED]
 
 Raw duration:
 92.169084 seconds
