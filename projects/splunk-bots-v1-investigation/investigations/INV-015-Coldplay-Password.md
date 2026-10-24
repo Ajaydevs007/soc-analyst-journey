@@ -120,16 +120,16 @@ Clocks
 Oceans
 Sparks
 Shiver
-Yellow
+[REDACTED]
 ```
 
 The password appearing in the brute-force traffic that matches a Coldplay song is:
 
 ```text
-yellow
+[REDACTED]
 ```
 
-Independent BOTS v1 walkthroughs use the same approach: extract `passwd`, restrict it to six characters, then identify `yellow` as the matching Coldplay song. :contentReference[oaicite:1]{index=1}
+Independent BOTS v1 walkthroughs use the same approach: extract `passwd`, restrict it to six characters, then identify `[REDACTED]` as the matching Coldplay song. :contentReference[oaicite:1]{index=1}
 
 ---
 
@@ -138,7 +138,7 @@ Independent BOTS v1 walkthroughs use the same approach: extract `passwd`, restri
 The six-character password matching a Coldplay song was:
 
 ```text
-yellow
+[REDACTED]
 ```
 
 ---
@@ -161,7 +161,7 @@ Filter len(passwd) = 6
 Compare with Coldplay songs
         |
         v
-YELLOW
+[REDACTED]
 ```
 
 ---
@@ -176,8 +176,8 @@ YELLOW
 | Method | POST |
 | Authentication | Joomla Administrator |
 | Password Length | 6 |
-| Matching Song | Yellow |
-| Password | `yellow` |
+| Matching Song | [REDACTED] |
+| Password | `[REDACTED]` |
 
 ---
 
@@ -186,5 +186,5 @@ YELLOW
 The password used during the brute-force attack that matches James Brodsky's favorite six-character Coldplay song was:
 
 ```text
-yellow
+[REDACTED]
 ```
