@@ -19,7 +19,7 @@ This index links to the investigation notes stored in this repository. Where a p
 | SOC169 — Possible IDOR | [Repository write-up](SOC169%20-%20Possible%20IDOR%20Attack%20Detecte) | [Medium walkthrough](https://medium.com/@ajaydevsv/medium-walkthrough-ec8560230910?postPublishedType=repub) |
 | SOC175 — Possible ProxyNotShell exploitation | [Repository write-up](SOC175%20-%20Possible%20CVE-2022-41082%20Exploitation) | [Medium walkthrough](https://medium.com/@ajaydevsv/investigating-a-proxynotshell-exploitation-attempt-soc175-powershell-found-in-requested-url-7f9399a8eff0) |
 | SOC235 — Confluence access-control issue | [Repository write-up](SOC235%20-%20Atlassian%20Confluence%20Broken%20Access%20Control%200-Day%20CVE-2023-22515) | [Medium walkthrough](https://medium.com/@ajaydevsv/investigating-an-atlassian-confluence-0-day-exploitation-attempt-soc235-cve-2023-22515-0e79c6e382a1) |
-| SOC274 — PAN-OS command-injection attempt | [Repository write-up](SOC274%20-%20Palo%20Alto%20PAN-OS%20Command%20Injection%20Exploitation%20(CVE-2024-3400)) | [Medium walkthrough](https://medium.com/@ajaydevsv/investigating-a-palo-alto-pan-os-exploitation-attempt-soc274-cve-2024-3400-letsdefend-soc-75128565bc11) |
+| SOC274 — PAN-OS command-injection attempt | [Repository write-up](SOC274%20-%20Palo%20Alto%20PAN-OS%20Command%20Injection%20Exploitation%20%28CVE-2024-3400%29) | [Medium walkthrough](https://medium.com/@ajaydevsv/investigating-a-palo-alto-pan-os-exploitation-attempt-soc274-cve-2024-3400-letsdefend-soc-75128565bc11) |
 
 ## Documentation Notes
 
