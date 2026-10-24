@@ -205,7 +205,7 @@ Example command:
   -d SOC-LAB.LOCAL \
   --dc 10.10.10.10 \
   ~/tools/soc-lab-users.txt \
-  'WrongLabPassword!2026'
+  '<REPLACE_WITH_DISPOSABLE_LAB_TEST_PASSWORD>'
 
 The attack generated multiple Kerberos pre-authentication failures on the Domain Controller.
 📊 Attack Telemetry
@@ -354,19 +354,19 @@ Active Directory
 [Active Directory Screenshots](screenshots/02-active-directory/)
 
 Domain Join
-[Domain Join Screenshots](screenshots/03-domain-join/)
+[Domain-join configuration and context](note/02-active-directory.md)
 
 Microsoft Sentinel
-[Sentinel Screenshots](screenshots/04-sentinel/)
+[Sentinel incident evidence](screenshots/04-detection/)
 
 Log Collection
-[Log Collection Screenshots](screenshots/05-log-collection/)
+[Authentication telemetry evidence](screenshots/02-active-directory/)
 
 Password Spray
-[Password Spray Screenshots](screenshots/06-password-spray/)
+[Password-spray evidence](screenshots/03-password-spray/)
 
 Detection
-[Detection Screenshots](screenshots/07-detection/)
+[Detection and incident evidence](screenshots/04-detection/)
 
 📚 Documentation
 
