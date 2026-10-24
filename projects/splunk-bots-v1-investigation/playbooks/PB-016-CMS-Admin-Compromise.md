@@ -58,7 +58,7 @@ If the activity is malicious:
 
 The correct password was:
 
-batman
+[REDACTED]
 
 The associated non-brute-force source observed in the dataset was:
 
