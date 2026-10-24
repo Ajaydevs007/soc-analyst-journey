@@ -5,7 +5,7 @@
 Analysis of HTTP authentication activity against the Joomla CMS running
 imreallynotbatman.com identified the correct administrative password as:
 
-batman
+[REDACTED]
 
 ## Attack Infrastructure
 
@@ -29,7 +29,7 @@ admin
 
 Correct password:
 
-batman
+[REDACTED]
 
 A separate source, 40.80.148.42, submitted the credential using a normal
 browser user agent.
